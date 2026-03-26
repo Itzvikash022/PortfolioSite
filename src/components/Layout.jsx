@@ -1,15 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import { Menu } from 'lucide-react';
 import ChatWidget from './ChatWidget';
 import CursorMascot from './CursorMascot';
+import MiniGame from './MiniGame';
 import RightNav from './RightNav';
 import { motion, useScroll } from 'framer-motion';
 
 export default function Layout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [mascotVariant, setMascotVariant] = useState('ghost'); // 'ghost' | 'drone' | 'cyberpet' | 'retro' | 'none'
+  const [mascotVariant, setMascotVariant] = useState(() => {
+    return localStorage.getItem('portfolio_mascot') || 'ghost';
+  });
   const { scrollYProgress } = useScroll();
+
+  useEffect(() => {
+    localStorage.setItem('portfolio_mascot', mascotVariant);
+  }, [mascotVariant]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -57,6 +64,7 @@ export default function Layout({ children }) {
       </div>
 
       {/* Global Interactive Elements */}
+      <MiniGame />
       {mascotVariant !== 'none' && <CursorMascot variant={mascotVariant} />}
       <ChatWidget />
     </div>

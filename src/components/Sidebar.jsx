@@ -77,13 +77,25 @@ export default function Sidebar({ className = '' }) {
         </div>
       </div>
 
-      {/* Footer Socials */}
-      <div className="p-4 bg-bg-card/50 flex items-center justify-center gap-4 border-t border-white/5">
-        <a href="#" className="hover:text-text-primary transition-colors"><FaLinkedinIn size={16} /></a>
-        <a href="#" className="hover:text-text-primary transition-colors"><FaDribbble size={16} /></a>
-        <a href="#" className="hover:text-text-primary transition-colors"><FaBehance size={16} /></a>
-        <a href="#" className="hover:text-text-primary transition-colors"><FaGithub size={16} /></a>
-        <a href="#" className="hover:text-text-primary transition-colors"><FaTwitter size={16} /></a>
+      {/* Footer Controls & Socials */}
+      <div className="p-5 bg-bg-card/50 flex flex-col items-center gap-5 border-t border-white/5 mt-auto">
+        {/* Play a Game Button */}
+        <button 
+          onClick={() => window.dispatchEvent(new CustomEvent('open-minigame'))}
+          className="w-full py-3 px-4 bg-bg-primary/50 hover:bg-accent/20 border border-white/5 hover:border-accent/30 text-text-secondary hover:text-accent rounded-md text-xs font-bold tracking-widest transition-all duration-300 flex items-center justify-center gap-2 group focus:outline-none"
+        >
+          <span>PLAY A GAME</span>
+          <span className="group-hover:rotate-12 transition-transform drop-shadow-md">🎮</span>
+        </button>
+
+        {/* Social Icons */}
+        <div className="flex items-center justify-center gap-5 w-full">
+          <a href="#" className="text-text-secondary hover:text-text-primary transition-colors"><FaLinkedinIn size={16} /></a>
+          <a href="#" className="text-text-secondary hover:text-text-primary transition-colors"><FaDribbble size={16} /></a>
+          <a href="#" className="text-text-secondary hover:text-text-primary transition-colors"><FaBehance size={16} /></a>
+          <a href="#" className="text-text-secondary hover:text-text-primary transition-colors"><FaGithub size={16} /></a>
+          <a href="#" className="text-text-secondary hover:text-text-primary transition-colors"><FaTwitter size={16} /></a>
+        </div>
       </div>
     </div>
   );

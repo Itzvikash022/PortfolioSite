@@ -76,13 +76,11 @@ export default function Hero() {
             Art Space!
           </h1>
 
-          <div className="mb-8 font-mono flex items-center gap-2 text-sm md:text-base animate-fade-in-up h-8" style={{ animationDelay: '0.1s' }}>
-            <span className="text-accent font-bold">&lt;code&gt;</span>
-            <span className="text-text-primary tracking-wide">
-              {text}
-              <span className="animate-pulse font-bold ml-px">|</span>
-            </span>
-            <span className="text-accent font-bold">&lt;/code&gt;</span>
+          <div className="mb-8 font-mono text-sm md:text-base animate-fade-in-up min-h-[3rem]" style={{ animationDelay: '0.1s', lineHeight: '1.8' }}>
+            <span className="text-accent font-bold mr-2">&lt;code&gt;</span>
+            <span className="text-text-primary tracking-wide">{text}</span>
+            <span className="animate-pulse font-bold text-text-primary">|</span>
+            <span className="text-accent font-bold ml-2">&lt;/code&gt;</span>
           </div>
 
           <div className="flex flex-wrap gap-4 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>

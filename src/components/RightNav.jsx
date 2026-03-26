@@ -6,6 +6,13 @@ export default function RightNav({ mascotVariant, setMascotVariant }) {
   const [activeSection, setActiveSection] = useState('HOME');
   const [theme, setTheme] = useState('dark');
 
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('portfolio_theme');
+    if (savedTheme && savedTheme !== theme) {
+      handleThemeChange(savedTheme);
+    }
+  }, []);
+
   const navLinks = [
     { name: 'HOME', href: '#home' },
     { name: 'PORTFOLIO', href: '#portfolio' },
@@ -22,6 +29,7 @@ export default function RightNav({ mascotVariant, setMascotVariant }) {
 
   const handleThemeChange = (newTheme) => {
     setTheme(newTheme);
+    localStorage.setItem('portfolio_theme', newTheme);
     if (newTheme === 'light') {
       document.documentElement.classList.add('light');
     } else {
