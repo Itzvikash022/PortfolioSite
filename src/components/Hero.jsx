@@ -29,8 +29,8 @@ export default function Hero() {
       // Pick current sentence
       const currentSentence = sentences[loopNum % sentences.length];
 
-      setText(isDeleting 
-        ? currentSentence.substring(0, text.length - 1) 
+      setText(isDeleting
+        ? currentSentence.substring(0, text.length - 1)
         : currentSentence.substring(0, text.length + 1)
       );
 
@@ -41,7 +41,7 @@ export default function Hero() {
       if (!isDeleting && text === currentSentence) {
         setTypingSpeed(1500); // Wait 1.5s before deleting
         setIsDeleting(true);
-      } 
+      }
       // If finished deleting
       else if (isDeleting && text === '') {
         setIsDeleting(false);
@@ -60,9 +60,9 @@ export default function Hero() {
     <section className="relative w-full rounded-2xl overflow-hidden mb-8" id="home">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src="/images/hero-bg.webp" 
-          alt="Hero background" 
+        <img
+          src="/images/hero-bg.webp"
+          alt="Hero background"
           className="w-full h-full object-cover opacity-30"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-bg-primary via-bg-primary/80 to-transparent"></div>
@@ -75,7 +75,7 @@ export default function Hero() {
             Discover my Amazing <br />
             Art Space!
           </h1>
-          
+
           <div className="mb-8 font-mono flex items-center gap-2 text-sm md:text-base animate-fade-in-up h-8" style={{ animationDelay: '0.1s' }}>
             <span className="text-accent font-bold">&lt;code&gt;</span>
             <span className="text-text-primary tracking-wide">
@@ -100,9 +100,9 @@ export default function Hero() {
           <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
             {/* Glow effect behind image */}
             <div className="absolute inset-0 bg-accent/20 rounded-full blur-[80px]"></div>
-            <img 
-              src="/images/hero-portrait.webp" 
-              alt="Artur Carter Portrait" 
+            <img
+              src="/images/hero-portrait.webp"
+              alt="Vikash Maurya Portrait"
               className="relative z-10 w-full h-full object-contain filter drop-shadow-2xl"
             />
           </div>
@@ -140,7 +140,7 @@ function Stat({ counter, suffix = '', label }) {
           setCount(start);
           if (start === end) clearInterval(timer);
         }, incrementTime);
-        
+
         observer.disconnect();
       }
     }, { threshold: 0.1 });

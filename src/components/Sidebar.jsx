@@ -10,14 +10,14 @@ export default function Sidebar({ className = '' }) {
       {/* Profile Section */}
       <div className="p-6 flex flex-col items-center border-b border-white/5 bg-bg-card/50">
         <div className="relative mb-4">
-          <img 
-            src="/images/profile.webp" 
-            alt="Artur Carter" 
+          <img
+            src="/images/profile.webp"
+            alt="Vikash Maurya"
             className="w-24 h-24 rounded-full object-cover border-2 border-bg-card"
           />
           <div className="absolute bottom-1 right-1 w-3.5 h-3.5 bg-accent rounded-full border-2 border-bg-card"></div>
         </div>
-        <h2 className="text-text-primary text-lg font-bold">Artur Carter</h2>
+        <h2 className="text-text-primary text-lg font-bold">Vikash Maurya</h2>
         <p className="text-sm mt-1">Front-end Developer</p>
         <p className="text-sm">UI/UX Designer</p>
       </div>
@@ -28,15 +28,15 @@ export default function Sidebar({ className = '' }) {
         <div className="space-y-2 pb-6 border-b border-white/5 text-sm">
           <div className="flex justify-between">
             <span>Residence:</span>
-            <span className="text-text-primary">Canada</span>
+            <span className="text-text-primary">India</span>
           </div>
           <div className="flex justify-between">
             <span>City:</span>
-            <span className="text-text-primary">Toronto</span>
+            <span className="text-text-primary">Surat</span>
           </div>
           <div className="flex justify-between">
             <span>Age:</span>
-            <span className="text-text-primary">26</span>
+            <span className="text-text-primary">24</span>
           </div>
         </div>
 
@@ -139,8 +139,8 @@ function ProgressBar({ label, value }) {
         <span>{value}%</span>
       </div>
       <div className="h-1 bg-bg-card rounded-full overflow-hidden border border-white/5">
-        <div 
-          className="h-full bg-accent transition-all duration-1000 ease-out" 
+        <div
+          className="h-full bg-accent transition-all duration-1000 ease-out"
           style={{ width: `${value}%` }}
         />
       </div>

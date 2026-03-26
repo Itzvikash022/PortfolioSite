@@ -17,7 +17,7 @@ export default function Contact() {
   return (
     <section id="contact" className="mb-16">
       <h2 className="text-2xl font-bold mb-8 animate-fade-in-up">Contact Information</h2>
-      
+
       {/* Contact Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
         <div className="glass-card p-6 rounded-lg text-center flex flex-col items-center group hover:border-accent/30 transition-colors">
@@ -25,10 +25,10 @@ export default function Contact() {
             <MapPin size={20} />
           </div>
           <h3 className="font-bold text-text-primary mb-2">Location</h3>
-          <p className="text-text-secondary text-sm">Toronto, Canada</p>
+          <p className="text-text-secondary text-sm">Surat, India</p>
           <p className="text-text-secondary text-sm">20 Dellbank Rd</p>
         </div>
-        
+
         <div className="glass-card p-6 rounded-lg text-center flex flex-col items-center group hover:border-accent/30 transition-colors">
           <div className="w-12 h-12 bg-bg-primary rounded-full flex items-center justify-center mb-4 text-accent group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(250,204,21,0.2)]">
             <Mail size={20} />
@@ -37,7 +37,7 @@ export default function Contact() {
           <p className="text-text-secondary text-sm">carter.inbox@mail.com</p>
           <p className="text-text-secondary text-sm">Telegram: @arter</p>
         </div>
-        
+
         <div className="glass-card p-6 rounded-lg text-center flex flex-col items-center group hover:border-accent/30 transition-colors">
           <div className="w-12 h-12 bg-bg-primary rounded-full flex items-center justify-center mb-4 text-accent group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(250,204,21,0.2)]">
             <Phone size={20} />
@@ -49,7 +49,7 @@ export default function Contact() {
       </div>
 
       <h2 className="text-2xl font-bold mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>Get in touch</h2>
-      
+
       {/* Contact Form */}
       <div className="glass-card p-8 rounded-lg animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
         {submitted ? (
@@ -71,7 +71,7 @@ export default function Contact() {
                 onChange={e => setFormData({ ...formData, name: e.target.value })}
               />
             </div>
-            
+
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-text-secondary">
                 <Mail size={18} />
@@ -85,7 +85,7 @@ export default function Contact() {
                 onChange={e => setFormData({ ...formData, email: e.target.value })}
               />
             </div>
-            
+
             <div className="relative">
               <div className="absolute top-4 left-0 pl-4 flex items-start pointer-events-none text-text-secondary">
                 <MessageSquare size={18} />
@@ -99,7 +99,7 @@ export default function Contact() {
                 onChange={e => setFormData({ ...formData, message: e.target.value })}
               ></textarea>
             </div>
-            
+
             <button
               type="submit"
               className="bg-accent text-bg-primary font-bold py-4 px-8 rounded hover:bg-white hover:text-bg-primary transition-all shadow-[0_10px_20px_-10px_rgba(250,204,21,0.5)] hover:shadow-none uppercase tracking-wider text-sm"

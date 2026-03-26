@@ -19,7 +19,7 @@ export default function Footer() {
 
       {/* Footer minimal row */}
       <footer className="glass-card py-6 px-8 rounded-lg flex flex-col md:flex-row items-center justify-between text-sm text-text-secondary">
-        <p>&copy; 2026 Artur Carter.</p>
+        <p>&copy; 2026 Vikash Maurya.</p>
         <p>Built with React & Tailwind V4</p>
       </footer>
     </>

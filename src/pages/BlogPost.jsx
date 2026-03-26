@@ -30,7 +30,7 @@ export default function BlogPost() {
     `,
     image: '/images/blog-1.webp',
     date: '24.12.2023',
-    author: 'Artur Carter',
+    author: 'Vikash Maurya',
     category: 'Web Development',
     comments: 4,
   };
@@ -40,9 +40,9 @@ export default function BlogPost() {
       <div className="glass-card rounded-lg overflow-hidden animate-fade-in-up">
         {/* Featured Image */}
         <div className="h-64 md:h-96 w-full relative">
-          <img 
-            src={post.image} 
-            alt={post.title} 
+          <img
+            src={post.image}
+            alt={post.title}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-bg-card via-transparent to-transparent"></div>
@@ -55,14 +55,14 @@ export default function BlogPost() {
           </Link>
 
           <div className="flex flex-col lg:flex-row gap-12">
-            
+
             {/* Main Content */}
             <div className="lg:w-2/3">
               <h1 className="text-3xl md:text-5xl font-bold text-text-primary mb-8 leading-tight">
                 {post.title}
               </h1>
-              
-              <div 
+
+              <div
                 className="text-text-secondary leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: post.content }}
               />

@@ -79,7 +79,7 @@ export default function ChatWidget() {
             className="fixed bottom-8 left-0 right-0 mx-auto w-[90vw] max-w-3xl h-14 glass-card backdrop-blur-md bg-bg-card/70 border border-white/10 rounded-full flex items-center px-4 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-50 overflow-hidden cursor-text"
             onClick={() => setPhase('chat')}
           >
-            <input 
+            <input
               type="text"
               placeholder="Type a message..."
               className="flex-1 bg-transparent text-text-primary placeholder-text-secondary outline-none px-2"
@@ -89,7 +89,7 @@ export default function ChatWidget() {
                 if (e.key === 'Enter') handleArrowClick(e);
               }}
             />
-            <button 
+            <button
               onClick={handleArrowClick}
               className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-bg-primary hover:bg-white transition-colors flex-shrink-0"
             >
@@ -115,7 +115,7 @@ export default function ChatWidget() {
             className="fixed bottom-8 left-0 right-0 mx-auto w-[90vw] max-w-3xl h-[450px] min-h-[350px] min-w-[300px] glass-card backdrop-blur-xl bg-bg-card/85 border border-white/10 rounded-2xl flex flex-col shadow-[0_20px_40px_rgba(0,0,0,0.6)] z-50 overflow-hidden resize"
           >
             {/* Header (Drag Handle) */}
-            <div 
+            <div
               className="p-4 border-b border-white/10 flex items-center justify-between bg-white/5 cursor-grab active:cursor-grabbing touch-none"
               onPointerDown={(e) => dragControls.start(e)}
             >
@@ -124,11 +124,11 @@ export default function ChatWidget() {
                   A
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm text-text-primary leading-tight">Artur Carter</h3>
+                  <h3 className="font-bold text-sm text-text-primary leading-tight">Vikash Maurya</h3>
                   <p className="text-xs text-text-secondary">Online</p>
                 </div>
               </div>
-              <button 
+              <button
                 onClick={(e) => { e.stopPropagation(); setPhase('input'); }}
                 className="text-text-secondary hover:text-text-primary transition-colors p-1"
                 onPointerDown={(e) => e.stopPropagation()}
@@ -141,11 +141,10 @@ export default function ChatWidget() {
             <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
               {messages.map(msg => (
                 <div key={msg.id} className={`flex ${msg.isBot ? 'justify-start' : 'justify-end'}`}>
-                  <div className={`max-w-[80%] rounded-2xl px-4 py-2 text-sm shadow-md ${
-                    msg.isBot 
-                      ? 'bg-white/10 text-text-primary rounded-tl-sm' 
+                  <div className={`max-w-[80%] rounded-2xl px-4 py-2 text-sm shadow-md ${msg.isBot
+                      ? 'bg-white/10 text-text-primary rounded-tl-sm'
                       : 'bg-accent text-bg-primary font-medium rounded-tr-sm'
-                  }`}>
+                    }`}>
                     {msg.text}
                   </div>
                 </div>
@@ -155,7 +154,7 @@ export default function ChatWidget() {
 
             {/* Input */}
             <div className="p-4 border-t border-white/10 bg-white/5 flex gap-2 items-center">
-              <input 
+              <input
                 type="text"
                 placeholder="Type a message..."
                 className="flex-1 bg-bg-primary/50 text-text-primary placeholder-text-secondary outline-none px-4 py-2.5 rounded-full text-sm border border-white/5 focus:border-accent/50 transition-colors"
@@ -166,7 +165,7 @@ export default function ChatWidget() {
                 }}
                 autoFocus
               />
-              <button 
+              <button
                 onClick={handleArrowClick}
                 className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-bg-primary hover:bg-white transition-colors flex-shrink-0"
               >

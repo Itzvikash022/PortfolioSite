@@ -4,7 +4,7 @@ export default function Timeline() {
   const education = [
     {
       id: 1,
-      title: 'University of toronto',
+      title: 'Sarvajanik University',
       subtitle: 'Student',
       date: 'jan 2018 - may 2020',
       description: 'Dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.',
@@ -12,7 +12,7 @@ export default function Timeline() {
     },
     {
       id: 2,
-      title: 'Arter design school',
+      title: 'HEHE HUHU school',
       subtitle: 'Student',
       date: 'jan 2018 - may 2020',
       description: 'Consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde?',
@@ -84,13 +84,13 @@ export default function Timeline() {
 
 function TimelineCard({ item, delay }) {
   return (
-    <div 
-      className="relative pl-8 animate-fade-in-up" 
+    <div
+      className="relative pl-8 animate-fade-in-up"
       style={{ animationDelay: `${delay}s` }}
     >
       {/* Timeline Dot */}
       <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-bg-primary border-[4px] border-accent shadow-[0_0_10px_rgba(250,204,21,0.5)]"></div>
-      
+
       {/* Card Content */}
       <div className="glass-card p-6 md:p-8 rounded-lg group hover:border-accent/30 transition-colors">
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
@@ -99,16 +99,16 @@ function TimelineCard({ item, delay }) {
             {item.date}
           </span>
         </div>
-        
+
         <h4 className="text-sm italic text-text-secondary mb-4">{item.subtitle}</h4>
-        
+
         <p className="text-text-secondary text-sm mb-4 leading-relaxed">
           {item.description}
         </p>
-        
+
         {item.linkText && (
-          <a 
-            href="#" 
+          <a
+            href="#"
             className="inline-flex items-center text-accent text-xs font-bold tracking-wider hover:text-white transition-colors uppercase"
             onClick={e => e.preventDefault()}
           >
