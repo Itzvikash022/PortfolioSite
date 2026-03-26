@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: #1e1e28;
+  --color-bg-card: #2c2d35;
+  --color-bg-sidebar: #20202a;
+  --color-accent: #ffc107;
+  --color-text-primary: #fafafa;
+  --color-text-secondary: #8c8c8e;
+  --font-sans: "Poppins", sans-serif;
+  --font-mono: ui-monospace, Consolas, monospace;
+}
+
+.light {
+  --color-bg-primary: #f0f0f6;
+  --color-bg-card: #ffffff;
+  --color-bg-sidebar: #fafafa;
+  --color-text-primary: #2b2b35;
+  --color-text-secondary: #8c8c8e;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-bg-primary text-text-primary font-sans antialiased;
+    margin: 0;
+    overflow-x: hidden;
+  }
+  
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-bg-primary;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-bg-card rounded-md border border-bg-sidebar;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-accent/50;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    @apply bg-bg-card/80 backdrop-blur-md border border-white/5 shadow-lg;
+  }
+  .glass-panel {
+    @apply bg-bg-sidebar/90 backdrop-blur-xl border-r border-white/5;
+  }
+}
+
+/* Animations will be added as needed */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
