@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon, Cat } from 'lucide-react';
+import { Menu, X, Sun, Moon, Cat, Ghost, Bot, MousePointer2, Ban } from 'lucide-react';
 
-export default function RightNav({ isMascotEnabled, setIsMascotEnabled }) {
+export default function RightNav({ mascotVariant, setMascotVariant }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('HOME');
   const [theme, setTheme] = useState('dark');
@@ -53,16 +53,41 @@ export default function RightNav({ isMascotEnabled, setIsMascotEnabled }) {
         </div>
 
         {/* Theme & Controls Toggle (Vertical) */}
-        <div className="flex flex-col gap-2 bg-bg-card rounded-[2rem] p-1 shadow-inner">
+        <div className="flex flex-col gap-2 bg-bg-card rounded-[2rem] p-1 shadow-inner relative group/mascot">
+          {/* Mascot Main Toggle / Icon */}
           <button 
-            onClick={() => setIsMascotEnabled(!isMascotEnabled)}
-            className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors ${isMascotEnabled ? 'bg-accent/20 text-accent' : 'text-text-secondary hover:text-text-primary'}`}
-            title="Toggle Mascot"
+            className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors ${mascotVariant !== 'none' ? 'bg-accent/20 text-accent' : 'text-text-secondary hover:text-text-primary'}`}
+            title="Mascot Options"
           >
-            <Cat size={14} />
+            {mascotVariant === 'ghost' && <Ghost size={14} />}
+            {mascotVariant === 'drone' && <Bot size={14} />}
+            {mascotVariant === 'cyberpet' && <Cat size={14} />}
+            {mascotVariant === 'retro' && <MousePointer2 size={14} />}
+            {mascotVariant === 'none' && <Ban size={14} />}
           </button>
+
+          {/* Expanded Mascot Menu (Appears on Hover) */}
+          {/* 'after' pseudo-element creates an invisible bridge across the 16px mr-4 gap so the mouse doesn't drop the group hover! */}
+          <div className="absolute right-full top-0 mr-4 flex items-center gap-2 opacity-0 -translate-x-4 pointer-events-none group-hover/mascot:opacity-100 group-hover/mascot:translate-x-0 group-hover/mascot:pointer-events-auto transition-all duration-300 bg-bg-card border border-white/5 rounded-full px-2 py-1.5 shadow-xl glass-panel whitespace-nowrap after:absolute after:inset-y-0 after:-right-6 after:w-6">
+            <button onClick={() => setMascotVariant('ghost')} className={`p-1.5 rounded-full hover:bg-white/10 transition-colors ${mascotVariant === 'ghost' && 'text-accent'}`} title="Cute Ghost">
+              <Ghost size={16} />
+            </button>
+            <button onClick={() => setMascotVariant('drone')} className={`p-1.5 rounded-full hover:bg-white/10 transition-colors ${mascotVariant === 'drone' && 'text-accent'}`} title="Sci-Fi Drone">
+              <Bot size={16} />
+            </button>
+            <button onClick={() => setMascotVariant('cyberpet')} className={`p-1.5 rounded-full hover:bg-white/10 transition-colors ${mascotVariant === 'cyberpet' && 'text-accent'}`} title="Cyber Pet">
+              <Cat size={16} />
+            </button>
+            <button onClick={() => setMascotVariant('retro')} className={`p-1.5 rounded-full hover:bg-white/10 transition-colors ${mascotVariant === 'retro' && 'text-accent'}`} title="Retro Cursor">
+              <MousePointer2 size={16} />
+            </button>
+            <div className="w-[1px] h-4 bg-white/10 mx-1"></div>
+            <button onClick={() => setMascotVariant('none')} className={`p-1.5 rounded-full hover:bg-red-500/20 hover:text-red-400 transition-colors ${mascotVariant === 'none' && 'text-red-500'}`} title="Disable Mascot">
+              <Ban size={16} />
+            </button>
+          </div>
           
-          <div className="w-full h-[1px] bg-white/5 my-1"></div>
+          <div className="w-full h-[1px] bg-white/5 my-0.5"></div>
           
           <button 
             onClick={() => handleThemeChange('dark')}
@@ -120,14 +145,27 @@ export default function RightNav({ isMascotEnabled, setIsMascotEnabled }) {
 
         {/* Bottom Theme & Controls Toggle */}
         <div className="p-6 border-t border-white/5 bg-bg-card/30">
-          <p className="text-xs text-text-secondary mb-3 font-bold tracking-widest">CONTROLS</p>
-          <div className="flex flex-wrap gap-2">
-            <button 
-              onClick={() => setIsMascotEnabled(!isMascotEnabled)}
-              className={`px-4 py-2 rounded-full text-xs font-bold transition-colors flex items-center gap-2 ${isMascotEnabled ? 'bg-accent/20 text-accent border border-accent/20' : 'bg-bg-primary text-text-secondary hover:text-text-primary border border-transparent'}`}
-            >
-              <Cat size={14} /> MASCOT
+          <p className="text-xs text-text-secondary mb-3 font-bold tracking-widest">MASCOT OPTIONS</p>
+          <div className="flex flex-wrap gap-2 mb-6">
+            <button onClick={() => setMascotVariant('ghost')} className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-colors ${mascotVariant === 'ghost' ? 'bg-accent/20 text-accent border border-accent/20' : 'bg-bg-primary text-text-secondary hover:text-text-primary border border-transparent'}`}>
+              <Ghost size={14} /> GHOST
             </button>
+            <button onClick={() => setMascotVariant('drone')} className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-colors ${mascotVariant === 'drone' ? 'bg-accent/20 text-accent border border-accent/20' : 'bg-bg-primary text-text-secondary hover:text-text-primary border border-transparent'}`}>
+              <Bot size={14} /> DRONE
+            </button>
+            <button onClick={() => setMascotVariant('cyberpet')} className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-colors ${mascotVariant === 'cyberpet' ? 'bg-accent/20 text-accent border border-accent/20' : 'bg-bg-primary text-text-secondary hover:text-text-primary border border-transparent'}`}>
+              <Cat size={14} /> CYBER PET
+            </button>
+            <button onClick={() => setMascotVariant('retro')} className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-colors ${mascotVariant === 'retro' ? 'bg-accent/20 text-accent border border-accent/20' : 'bg-bg-primary text-text-secondary hover:text-text-primary border border-transparent'}`}>
+              <MousePointer2 size={14} /> RETRO
+            </button>
+            <button onClick={() => setMascotVariant('none')} className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-colors ${mascotVariant === 'none' ? 'bg-red-500/20 text-red-500 border border-red-500/20' : 'bg-bg-primary text-text-secondary hover:text-text-primary border border-transparent'}`}>
+              <Ban size={14} /> OFF
+            </button>
+          </div>
+
+          <p className="text-xs text-text-secondary mb-3 font-bold tracking-widest">THEME</p>
+          <div className="flex gap-2">
             <button 
               onClick={() => { handleThemeChange('dark'); setIsOpen(false); }}
               className={`px-4 py-2 rounded-full text-xs font-bold transition-colors flex items-center gap-2 ${theme === 'dark' ? 'bg-accent text-bg-primary' : 'bg-bg-primary text-text-secondary hover:text-text-primary'}`}

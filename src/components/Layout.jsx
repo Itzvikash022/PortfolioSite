@@ -8,7 +8,7 @@ import { motion, useScroll } from 'framer-motion';
 
 export default function Layout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isMascotEnabled, setIsMascotEnabled] = useState(true);
+  const [mascotVariant, setMascotVariant] = useState('ghost'); // 'ghost' | 'drone' | 'cyberpet' | 'retro' | 'none'
   const { scrollYProgress } = useScroll();
 
   const toggleSidebar = () => {
@@ -47,7 +47,7 @@ export default function Layout({ children }) {
       </div>
 
       {/* Right Navigation */}
-      <RightNav isMascotEnabled={isMascotEnabled} setIsMascotEnabled={setIsMascotEnabled} />
+      <RightNav mascotVariant={mascotVariant} setMascotVariant={setMascotVariant} />
 
       {/* Main Content */}
       <div className="pt-16 lg:pt-0 pb-10 lg:pl-[280px] lg:pr-[70px] relative min-h-screen flex flex-col">
@@ -57,7 +57,7 @@ export default function Layout({ children }) {
       </div>
 
       {/* Global Interactive Elements */}
-      {isMascotEnabled && <CursorMascot />}
+      {mascotVariant !== 'none' && <CursorMascot variant={mascotVariant} />}
       <ChatWidget />
     </div>
   );
