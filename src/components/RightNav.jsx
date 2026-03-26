@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon, Cat } from 'lucide-react';
 
-export default function RightNav() {
+export default function RightNav({ isMascotEnabled, setIsMascotEnabled }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('HOME');
   const [theme, setTheme] = useState('dark');
@@ -52,8 +52,18 @@ export default function RightNav() {
           </span>
         </div>
 
-        {/* Theme Toggle (Vertical) */}
-        <div className="flex flex-col gap-2 bg-bg-card rounded-full p-1 shadow-inner">
+        {/* Theme & Controls Toggle (Vertical) */}
+        <div className="flex flex-col gap-2 bg-bg-card rounded-[2rem] p-1 shadow-inner">
+          <button 
+            onClick={() => setIsMascotEnabled(!isMascotEnabled)}
+            className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors ${isMascotEnabled ? 'bg-accent/20 text-accent' : 'text-text-secondary hover:text-text-primary'}`}
+            title="Toggle Mascot"
+          >
+            <Cat size={14} />
+          </button>
+          
+          <div className="w-full h-[1px] bg-white/5 my-1"></div>
+          
           <button 
             onClick={() => handleThemeChange('dark')}
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors ${theme === 'dark' ? 'bg-accent text-bg-primary' : 'text-text-secondary hover:text-text-primary'}`}
@@ -108,10 +118,16 @@ export default function RightNav() {
           ))}
         </nav>
 
-        {/* Bottom Theme Toggle */}
+        {/* Bottom Theme & Controls Toggle */}
         <div className="p-6 border-t border-white/5 bg-bg-card/30">
-          <p className="text-xs text-text-secondary mb-3 font-bold tracking-widest">THEME</p>
-          <div className="flex gap-2">
+          <p className="text-xs text-text-secondary mb-3 font-bold tracking-widest">CONTROLS</p>
+          <div className="flex flex-wrap gap-2">
+            <button 
+              onClick={() => setIsMascotEnabled(!isMascotEnabled)}
+              className={`px-4 py-2 rounded-full text-xs font-bold transition-colors flex items-center gap-2 ${isMascotEnabled ? 'bg-accent/20 text-accent border border-accent/20' : 'bg-bg-primary text-text-secondary hover:text-text-primary border border-transparent'}`}
+            >
+              <Cat size={14} /> MASCOT
+            </button>
             <button 
               onClick={() => { handleThemeChange('dark'); setIsOpen(false); }}
               className={`px-4 py-2 rounded-full text-xs font-bold transition-colors flex items-center gap-2 ${theme === 'dark' ? 'bg-accent text-bg-primary' : 'bg-bg-primary text-text-secondary hover:text-text-primary'}`}

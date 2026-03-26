@@ -2,11 +2,13 @@ import { useState } from 'react';
 import Sidebar from './Sidebar';
 import { Menu } from 'lucide-react';
 import ChatWidget from './ChatWidget';
+import CursorMascot from './CursorMascot';
 import RightNav from './RightNav';
 import { motion, useScroll } from 'framer-motion';
 
 export default function Layout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isMascotEnabled, setIsMascotEnabled] = useState(true);
   const { scrollYProgress } = useScroll();
 
   const toggleSidebar = () => {
@@ -17,7 +19,7 @@ export default function Layout({ children }) {
     <div className="min-h-screen bg-bg-primary">
       {/* Top Scroll Progress Bar */}
       <motion.div 
-        className="fixed top-0 left-0 right-0 h-1 bg-accent z-[100] origin-left shadow-[0_0_15px_rgba(250,204,21,0.8)]"
+        className="fixed top-0 left-0 right-0 h-[2.5px] bg-accent z-[100] origin-left shadow-[0_0_15px_rgba(250,204,21,0.8)]"
         style={{ scaleX: scrollYProgress }}
       />
       
@@ -45,7 +47,7 @@ export default function Layout({ children }) {
       </div>
 
       {/* Right Navigation */}
-      <RightNav />
+      <RightNav isMascotEnabled={isMascotEnabled} setIsMascotEnabled={setIsMascotEnabled} />
 
       {/* Main Content */}
       <div className="pt-16 lg:pt-0 pb-10 lg:pl-[280px] lg:pr-[70px] relative min-h-screen flex flex-col">
@@ -55,6 +57,7 @@ export default function Layout({ children }) {
       </div>
 
       {/* Global Interactive Elements */}
+      {isMascotEnabled && <CursorMascot />}
       <ChatWidget />
     </div>
   );
