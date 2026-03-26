@@ -29,18 +29,12 @@
     overflow-x: hidden;
   }
   
-  /* Custom Scrollbar */
+  /* Hide Custom Scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
+    display: none;
   }
-  ::-webkit-scrollbar-track {
-    @apply bg-bg-primary;
-  }
-  ::-webkit-scrollbar-thumb {
-    @apply bg-bg-card rounded-md border border-bg-sidebar;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-accent/50;
+  * {
+    scrollbar-width: none;
   }
 }
 

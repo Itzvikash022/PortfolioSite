@@ -3,9 +3,11 @@ import Sidebar from './Sidebar';
 import { Menu } from 'lucide-react';
 import ChatWidget from './ChatWidget';
 import RightNav from './RightNav';
+import { motion, useScroll } from 'framer-motion';
 
 export default function Layout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { scrollYProgress } = useScroll();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -13,6 +15,12 @@ export default function Layout({ children }) {
 
   return (
     <div className="min-h-screen bg-bg-primary">
+      {/* Top Scroll Progress Bar */}
+      <motion.div 
+        className="fixed top-0 left-0 right-0 h-1 bg-accent z-[100] origin-left shadow-[0_0_15px_rgba(250,204,21,0.8)]"
+        style={{ scaleX: scrollYProgress }}
+      />
+      
       {/* Mobile Header for Sidebar Toggle */}
       <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-bg-card z-50 flex items-center justify-between px-6 border-b border-white/5 shadow-md">
         <span className="font-bold text-lg">Vikash Maurya</span>
