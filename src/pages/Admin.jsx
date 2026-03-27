@@ -20,7 +20,7 @@ export default function Admin() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-bg-primary flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4 relative z-0">
         {/* Animated Background Orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/30 rounded-full blur-[120px]"></div>
@@ -68,7 +68,7 @@ function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('personal'); // personal, works, blogs
   
   return (
-    <div className="min-h-screen bg-bg-primary flex flex-col md:flex-row">
+    <div className="min-h-screen flex flex-col md:flex-row relative z-0">
       {/* Admin Sidebar */}
       <aside className="w-full md:w-64 bg-bg-card/50 border-r border-white/5 flex flex-col md:min-h-screen">
         <div className="p-6 border-b border-white/5">

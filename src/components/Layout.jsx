@@ -23,7 +23,7 @@ export default function Layout({ children }) {
   };
 
   return (
-    <div className="min-h-screen bg-bg-primary">
+    <div className="min-h-screen relative z-0 text-text-primary font-sans selection:bg-accent selection:text-bg-primary">
       {/* Top Scroll Progress Bar */}
       <motion.div 
         className="fixed top-0 left-0 right-0 h-[2.5px] bg-accent z-[100] origin-left shadow-[0_0_15px_rgba(250,204,21,0.8)]"
