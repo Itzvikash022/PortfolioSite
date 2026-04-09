@@ -18,7 +18,6 @@ export default function RightNav({ mascotVariant, setMascotVariant }) {
     { name: 'PORTFOLIO', href: '#portfolio' },
     { name: 'HISTORY', href: '#history' },
     { name: 'CONTACT', href: '#contact' },
-    { name: 'TESTIMONIALS', href: '#testimonials' },
     { name: 'BLOG', href: '#blog' }
   ];
 

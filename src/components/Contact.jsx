@@ -1,17 +1,51 @@
-import { useState } from 'react';
-import { Mail, Phone, MapPin, User, MessageSquare } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Mail, Phone, MapPin, User, MessageSquare, Loader2 } from 'lucide-react';
+import { fetchAPI } from '../utils/api';
 
 export default function Contact() {
+  const [profile, setProfile] = useState(null);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [isSending, setIsSending] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const data = await fetchAPI('/personal');
+        setProfile(data);
+      } catch (err) {
+        console.error('Failed to load profile for contact:', err);
+      }
+    };
+    loadProfile();
+  }, []);
+
+  const {
+    city = 'Surat',
+    residence = 'India',
+    address = '20 Dellbank Rd',
+    email = 'carter.inbox@mail.com',
+    phone = '+78 098 333 11 22',
+    socials = {}
+  } = profile || {};
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
+    setIsSending(true);
+    try {
+      await fetchAPI('/messages', {
+        method: 'POST',
+        body: JSON.stringify(formData),
+      });
+      setSubmitted(true);
       setFormData({ name: '', email: '', message: '' });
-    }, 5000);
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (err) {
+      console.error('Failed to send message:', err);
+      alert('Failed to send message. Please try again later.');
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -25,8 +59,7 @@ export default function Contact() {
             <MapPin size={20} />
           </div>
           <h3 className="font-bold text-text-primary mb-2">Location</h3>
-          <p className="text-text-secondary text-sm">Surat, India</p>
-          <p className="text-text-secondary text-sm">20 Dellbank Rd</p>
+          <p className="text-text-secondary text-sm">{address || 'Surat, India'}</p>
         </div>
 
         <div className="glass-card p-6 rounded-lg text-center flex flex-col items-center group hover:border-accent/30 transition-colors">
@@ -34,8 +67,12 @@ export default function Contact() {
             <Mail size={20} />
           </div>
           <h3 className="font-bold text-text-primary mb-2">Email & Social</h3>
-          <p className="text-text-secondary text-sm">carter.inbox@mail.com</p>
-          <p className="text-text-secondary text-sm">Telegram: @arter</p>
+          <p className="text-text-secondary text-sm line-clamp-1 mb-1">{email}</p>
+          <div className="flex gap-3 text-xs text-text-secondary">
+             {socials.discord && <span className="opacity-80">Discord: {socials.discord.split('/').pop()}</span>}
+             {socials.telegram && <span className="opacity-80">TG: @{socials.telegram.split('/').pop().replace('@', '')}</span>}
+             {!socials.discord && !socials.telegram && <span className="opacity-80">Twitter: @itzvikash</span>}
+          </div>
         </div>
 
         <div className="glass-card p-6 rounded-lg text-center flex flex-col items-center group hover:border-accent/30 transition-colors">
@@ -43,8 +80,8 @@ export default function Contact() {
             <Phone size={20} />
           </div>
           <h3 className="font-bold text-text-primary mb-2">Phones</h3>
-          <p className="text-text-secondary text-sm">Support: +78 098 333 11 22</p>
-          <p className="text-text-secondary text-sm">Personal: +78 077 114 26 53</p>
+          <p className="text-text-secondary text-sm">Main: {phone}</p>
+          <p className="text-text-secondary text-sm">Available Mon-Sat</p>
         </div>
       </div>
 
@@ -102,9 +139,17 @@ export default function Contact() {
 
             <button
               type="submit"
-              className="bg-accent text-bg-primary font-bold py-4 px-8 rounded hover:bg-white hover:text-bg-primary transition-all shadow-[0_10px_20px_-10px_rgba(250,204,21,0.5)] hover:shadow-none uppercase tracking-wider text-sm"
+              disabled={isSending}
+              className="bg-accent text-bg-primary font-bold py-4 px-8 rounded hover:bg-white hover:text-bg-primary transition-all shadow-[0_10px_20px_-10px_rgba(250,204,21,0.5)] hover:shadow-none uppercase tracking-wider text-sm flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              Send Message
+              {isSending ? (
+                <>
+                  <Loader2 className="animate-spin" size={18} />
+                  SENDING...
+                </>
+              ) : (
+                'Send Message'
+              )}
             </button>
           </form>
         )}

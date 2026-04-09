@@ -1,77 +1,10 @@
 import { useState, useEffect } from 'react';
-import { ChevronRight, ChevronLeft, X } from 'lucide-react';
+import { ChevronRight, ChevronLeft, X, Loader2, GitBranch, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { fetchAPI } from '../utils/api';
+import { PortfolioGridSkeleton } from './Skeleton';
 
-const portfolioItems = [
-  { 
-    id: 1, 
-    category: 'Web Templates', 
-    title: 'Creative Agency Theme', 
-    image: '/images/portfolio-1.webp',
-    images: ['/images/portfolio-1.webp', '/images/hero-bg.webp', '/images/blog-1.webp'],
-    description: 'A comprehensive web template tailored for creative agencies, featuring immersive dark modes, fluid animations, and a focus on visual hierarchy to showcase portfolios beautifully.',
-    client: 'Envato',
-    date: 'Oct 2025',
-    role: 'Frontend Architect'
-  },
-  { 
-    id: 2, 
-    category: 'UI Elements', 
-    title: 'Dashboard UI Kit', 
-    image: '/images/portfolio-1.webp',
-    images: ['/images/hero-bg.webp', '/images/portfolio-1.webp', '/images/blog-1.webp'],
-    description: 'A cutting-edge dark-themed dashboard UI kit designed for SaaS platforms. Includes over 100+ components, interactive charts, and seamless responsive layouts for analytics.',
-    client: 'FinTech Startup',
-    date: 'Dec 2025',
-    role: 'UI/UX Designer'
-  },
-  { 
-    id: 3, 
-    category: 'Logos', 
-    title: 'StartUp Logo Design', 
-    image: '/images/portfolio-1.webp',
-    images: ['/images/blog-1.webp', '/images/hero-bg.webp', '/images/portfolio-1.webp'],
-    description: 'A modern, geometric logo approach for an emerging AI startup. The branding package includes variations for dark and light modes, typography guidelines, and scalable vector assets.',
-    client: 'AI Dynamics',
-    date: 'Jan 2026',
-    role: 'Brand Designer'
-  },
-  { 
-    id: 4, 
-    category: 'Drawings', 
-    title: 'Abstract Illustration', 
-    image: '/images/portfolio-1.webp',
-    images: ['/images/hero-bg.webp', '/images/blog-1.webp', '/images/portfolio-1.webp'],
-    description: 'A collection of abstract digital illustrations exploring the intersection of nature and technology. Created using advanced tablet workflows and custom brush engines.',
-    client: 'Personal Project',
-    date: 'Feb 2026',
-    role: 'Illustrator'
-  },
-  { 
-    id: 5, 
-    category: 'Web Templates', 
-    title: 'E-commerce React App', 
-    image: '/images/portfolio-1.webp',
-    images: ['/images/portfolio-1.webp', '/images/blog-1.webp', '/images/hero-bg.webp'],
-    description: 'A robust, high-performance e-commerce frontend built entirely in React and Tailwind CSS. Features advanced filtering, cart management, and seamless micro-animations.',
-    client: 'Shopify Premium',
-    date: 'Mar 2026',
-    role: 'Lead Developer'
-  },
-  { 
-    id: 6, 
-    category: 'UI Elements', 
-    title: 'Mobile Banking App', 
-    image: '/images/portfolio-1.webp',
-    images: ['/images/blog-1.webp', '/images/portfolio-1.webp', '/images/hero-bg.webp'],
-    description: 'Mobile-first design system for a digital banking application focusing on accessibility, clear visual hierarchy, and trust-building dark mode color palettes.',
-    client: 'Global Bank',
-    date: 'Apr 2026',
-    role: 'Lead UX Designer'
-  },
-];
-
-const filters = ['All', 'Web Templates', 'Logos', 'Drawings', 'UI Elements'];
+const CATEGORIES = ['All', 'Frontend', 'Backend', 'Full Stack', 'Mobile', 'DevOps', 'Management', 'Design', 'Other'];
 
 function Carousel({ images }) {
   const [index, setIndex] = useState(0);
@@ -135,8 +68,24 @@ function Carousel({ images }) {
 }
 
 export default function Portfolio() {
+  const [portfolioItems, setPortfolioItems] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('All');
   const [selectedItem, setSelectedItem] = useState(null);
+
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        const data = await fetchAPI('/projects');
+        setPortfolioItems(data);
+      } catch (err) {
+        console.error('Failed to load projects:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadProjects();
+  }, []);
 
   const filteredItems = activeFilter === 'All' 
     ? portfolioItems 
@@ -155,11 +104,11 @@ export default function Portfolio() {
   return (
     <section id="portfolio" className="mb-16">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 animate-fade-in-up">
-        <h2 className="text-2xl font-bold mb-4 md:mb-0">Works</h2>
+        <h2 className="text-2xl font-bold mb-4 md:mb-0">Projects</h2>
         
         {/* Filters */}
         <div className="flex flex-wrap gap-2 md:gap-4">
-          {filters.map(filter => (
+          {CATEGORIES.map(filter => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
@@ -176,36 +125,45 @@ export default function Portfolio() {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredItems.map((item, index) => (
-          <div 
-            key={item.id} 
-            className="group relative overflow-hidden rounded-lg animate-fade-in-up cursor-pointer"
-            style={{ animationDelay: `${index * 0.1}s` }}
-            onClick={() => setSelectedItem(item)}
-          >
-            {/* Image Wrapper */}
-            <div className="aspect-[4/3] bg-bg-card overflow-hidden">
-              <img 
-                src={item.image} 
-                alt={item.title} 
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
+      {loading ? (
+        <PortfolioGridSkeleton count={6} />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredItems.map((item, index) => (
+            <div 
+              key={item._id || item.id} 
+              className="group relative overflow-hidden rounded-lg animate-fade-in-up cursor-pointer"
+              style={{ animationDelay: `${index * 0.1}s` }}
+              onClick={() => setSelectedItem(item)}
+            >
+              {/* Image Wrapper */}
+              <div className="aspect-[4/3] bg-bg-card overflow-hidden">
+                <img 
+                  src={item.image} 
+                  alt={item.title} 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              
+              {/* Hover Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-bg-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                <span className="text-accent text-xs mb-1 font-mono tracking-wider">{item.category}</span>
+                <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
+                <button 
+                  className="inline-flex items-center text-accent text-xs font-bold tracking-wider hover:text-white transition-colors uppercase"
+                >
+                  READ MORE <ChevronRight size={14} className="ml-1" />
+                </button>
+              </div>
             </div>
-            
-            {/* Hover Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-bg-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-              <span className="text-accent text-xs mb-1 font-mono tracking-wider">{item.category}</span>
-              <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
-              <button 
-                className="inline-flex items-center text-accent text-xs font-bold tracking-wider hover:text-white transition-colors uppercase"
-              >
-                READ MORE <ChevronRight size={14} className="ml-1" />
-              </button>
+          ))}
+          {filteredItems.length === 0 && (
+            <div className="col-span-full py-20 text-center border border-dashed border-white/10 rounded-xl">
+              <p className="text-text-secondary italic">No projects found in this category.</p>
             </div>
-          </div>
-        ))}
-      </div>
+          )}
+        </div>
+      )}
 
       {/* Project Detail Modal */}
       <AnimatePresence>
@@ -239,7 +197,13 @@ export default function Portfolio() {
 
               {/* Carousel Area */}
               <div className="w-full md:w-3/5 bg-black relative h-64 md:h-full overflow-hidden group">
-                <Carousel images={selectedItem.images} />
+                {selectedItem.images && selectedItem.images.length > 0 ? (
+                  <Carousel images={selectedItem.images} />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-text-secondary text-sm">
+                    No preview images
+                  </div>
+                )}
               </div>
 
               {/* Details Area */}
@@ -252,17 +216,42 @@ export default function Portfolio() {
                 </div>
 
                 <div className="mt-auto space-y-4 pt-6 border-t border-white/10">
-                  <div className="flex justify-between items-center bg-white/5 p-3 rounded-lg">
-                    <span className="text-xs text-text-secondary uppercase tracking-widest font-bold">Client:</span>
-                    <span className="text-sm font-bold text-text-primary">{selectedItem.client}</span>
-                  </div>
-                  <div className="flex justify-between items-center bg-white/5 p-3 rounded-lg">
-                    <span className="text-xs text-text-secondary uppercase tracking-widest font-bold">Date:</span>
-                    <span className="text-sm font-bold text-text-primary">{selectedItem.date}</span>
-                  </div>
-                  <div className="flex justify-between items-center bg-white/5 p-3 rounded-lg">
-                    <span className="text-xs text-text-secondary uppercase tracking-widest font-bold">Role:</span>
-                    <span className="text-sm border-b border-accent text-text-primary mb-0.5 pb-0.5">{selectedItem.role}</span>
+                  {selectedItem.date && (
+                    <div className="flex justify-between items-center bg-white/5 p-3 rounded-lg">
+                      <span className="text-xs text-text-secondary uppercase tracking-widest font-bold">Date:</span>
+                      <span className="text-sm font-bold text-text-primary">{selectedItem.date}</span>
+                    </div>
+                  )}
+                  {selectedItem.role && (
+                    <div className="flex justify-between items-center bg-white/5 p-3 rounded-lg">
+                      <span className="text-xs text-text-secondary uppercase tracking-widest font-bold">Role:</span>
+                      <span className="text-sm text-text-primary">{selectedItem.role}</span>
+                    </div>
+                  )}
+                  <div className="flex gap-3 pt-2">
+                    {selectedItem.previewLink && (
+                      <a
+                        href={selectedItem.previewLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center gap-2 py-3 bg-accent text-bg-primary font-bold text-xs rounded-md hover:bg-yellow-400 transition-colors uppercase tracking-wider"
+                      >
+                        <ExternalLink size={14} /> Live Preview
+                      </a>
+                    )}
+                    {selectedItem.githubLink && (
+                      <a
+                        href={selectedItem.githubLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center gap-2 py-3 bg-white/10 text-text-primary font-bold text-xs rounded-md hover:bg-white/20 border border-white/10 transition-colors uppercase tracking-wider"
+                      >
+                        <GitBranch size={14} /> GitHub
+                      </a>
+                    )}
+                    {!selectedItem.previewLink && !selectedItem.githubLink && (
+                      <p className="text-xs text-text-secondary italic">No links provided.</p>
+                    )}
                   </div>
                 </div>
               </div>
